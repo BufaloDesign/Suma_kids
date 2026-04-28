@@ -1,407 +1,369 @@
 
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-        <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>Desafío Mágico v4 ✨</title>
-                    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
-                        <style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desafío Mágico v4 ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
         :root {
-                      --bg-color: #ffebf2;
-                                  --main-color: #ff85a2;
-                                              --accent-color: #b39ddb;
-                                                          --scene-bg: #e1f5fe;
-                                                                      --text-color: #5d4037;
-                                                                                  --btn-shadow: #e6738f;
-                                                                                          }
+            --bg-color: #ffebf2;
+            --main-color: #ff85a2;
+            --accent-color: #b39ddb;
+            --scene-bg: #e1f5fe;
+            --text-color: #5d4037;
+            --btn-shadow: #e6738f;
+        }
 
-                .theme-guerrero {
-                              --bg-color: #e0f2f1;
-                                          --main-color: #26a69a;
-                                                      --accent-color: #5c6bc0;
-                                                                  --scene-bg: #f1f8e9;
-                                                                              --text-color: #263238;
-                                                                                          --btn-shadow: #00897b;
-                                                                                                  }
+        .theme-guerrero {
+            --bg-color: #e0f2f1;
+            --main-color: #26a69a;
+            --accent-color: #5c6bc0;
+            --scene-bg: #f1f8e9;
+            --text-color: #263238;
+            --btn-shadow: #00897b;
+        }
 
-                        body {
-                                      font-family: 'Quicksand', sans-serif;
-                                                  background-color: var(--bg-color);
-                                                              color: var(--text-color);
-                                                                          margin: 0;
-                                                                                      display: flex;
-                                                                                                  justify-content: center;
-                                                                                                              align-items: center;
-                                                                                                                          min-height: 100vh;
-                                                                                                                                      padding: 20px;
-                                                                                                                                                  box-sizing: border-box;
-                                                                                                                                                          }
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
 
-                                #app {
-                                              background: white;
-                                                          padding: 30px;
-                                                                      border-radius: 35px;
-                                                                                  box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-                                                                                              width: 100%;
-                                                                                                          max-width: 440px;
-                                                                                                                      border: 4px solid var(--accent-color);
-                                                                                                                                  text-align: center;
-                                                                                                                                              box-sizing: border-box;
-                                                                                                                                                      }
+        #app {
+            background: white;
+            padding: 30px;
+            border-radius: 35px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 440px;
+            border: 4px solid var(--accent-color);
+            text-align: center;
+            box-sizing: border-box;
+        }
 
-                                        .hidden { display: none; }
-                                                h1 { color: var(--main-color); margin-bottom: 10px; font-size: 1.8rem; }
+        .hidden { display: none; }
+        h1 { color: var(--main-color); margin-bottom: 10px; font-size: 1.8rem; }
 
-                                                        /* --- SELECTORES --- */
-                                                        .selector-grid {
-                                                                      display: flex;
-                                                                                  justify-content: center;
-                                                                                              gap: 10px;
-                                                                                                          margin-bottom: 15px;
-                                                                                                                  }
+        /* --- SELECTORES --- */
+        .selector-grid {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
 
-                                                                .choice-btn {
-                                                                              flex: 1;
-                                                                                          padding: 10px;
-                                                                                                      border: 2px solid #eee;
-                                                                                                                  border-radius: 12px;
-                                                                                                                              cursor: pointer;
-                                                                                                                                          background: #fafafa;
-                                                                                                                                                      font-weight: bold;
-                                                                                                                                                                  transition: 0.3s;
-                                                                                                                                                                          }
+        .choice-btn {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #eee;
+            border-radius: 12px;
+            cursor: pointer;
+            background: #fafafa;
+            font-weight: bold;
+            transition: 0.3s;
+        }
 
-                                                                        .choice-btn.selected {
-                                                                                      background: var(--main-color);
-                                                                                                  color: white;
-                                                                                                              border-color: var(--main-color);
-                                                                                                                      }
+        .choice-btn.selected {
+            background: var(--main-color);
+            color: white;
+            border-color: var(--main-color);
+        }
 
-                                                                                .config-group { margin: 15px 0; text-align: left; }
-                                                                                        .config-group label { font-size: 0.85rem; font-weight: 700; margin-left: 5px; color: var(--accent-color); }
+        .config-group { margin: 15px 0; text-align: left; }
+        .config-group label { font-size: 0.85rem; font-weight: 700; margin-left: 5px; color: var(--accent-color); }
 
-                                                                                                input[type="text"], input[type="number"] {
-                                                                                                              padding: 12px; border-radius: 12px; border: 2px solid #ddd;
-                                                                                                                          font-family: 'Quicksand'; width: 100%; box-sizing: border-box; margin-top: 5px;
-                                                                                                                                  }
+        input[type="text"], input[type="number"] {
+            padding: 12px; border-radius: 12px; border: 2px solid #ddd;
+            font-family: 'Quicksand'; width: 100%; box-sizing: border-box; margin-top: 5px;
+        }
 
-                                                                                                        /* --- JUEGO --- */
-                                                                                                        .game-scene {
-                                                                                                                      background: var(--scene-bg);
-                                                                                                                                  height: 80px; border-radius: 20px; margin-bottom: 20px;
-                                                                                                                                              position: relative; overflow: hidden; border: 2px solid rgba(0,0,0,0.05);
-                                                                                                                                                      }
+        /* --- JUEGO --- */
+        .game-scene {
+            background: var(--scene-bg);
+            height: 80px; border-radius: 20px; margin-bottom: 20px;
+            position: relative; overflow: hidden; border: 2px solid rgba(0,0,0,0.05);
+        }
 
-                                                                                                                .character { position: absolute; bottom: 10px; font-size: 2rem; transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-                                                                                                                        #hero { left: 10px; z-index: 2; }
-                                                                                                                                #target { right: 10px; }
-                                                                                                                                        #danger { right: -60px; bottom: 15px; font-size: 1.8rem; }
+        .character { position: absolute; bottom: 10px; font-size: 2rem; transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        #hero { left: 10px; z-index: 2; }
+        #target { right: 10px; }
+        #danger { right: -60px; bottom: 15px; font-size: 1.8rem; }
 
-                                                                                                                                                .suma-box {
-                                                                                                                                                              display: inline-block; font-size: 3rem; text-align: right;
-                                                                                                                                                                          margin: 10px 0; position: relative; font-weight: 700;
-                                                                                                                                                                                      color: var(--accent-color); letter-spacing: 10px;
-                                                                                                                                                                                              }
+        .suma-box {
+            display: inline-block; font-size: 3rem; text-align: right;
+            margin: 10px 0; position: relative; font-weight: 700;
+            color: var(--accent-color); letter-spacing: 10px;
+        }
 
-                                                                                                                                                        .linea { border-bottom: 6px solid var(--main-color); border-radius: 10px; margin: 5px 0 15px 0; }
+        .linea { border-bottom: 6px solid var(--main-color); border-radius: 10px; margin: 5px 0 15px 0; }
 
-                                                                                                                                                                .inputs-row { display: flex; flex-direction: row-reverse; justify-content: center; gap: 8px; }
+        .inputs-row { display: flex; flex-direction: row-reverse; justify-content: center; gap: 8px; }
 
-                                                                                                                                                                        .digit {
-                                                                                                                                                                                      width: 50px; height: 65px; font-size: 2.2rem; text-align: center;
-                                                                                                                                                                                                  border: 3px solid #f0f0f0; border-radius: 12px; color: var(--main-color);
-                                                                                                                                                                                                              background: #fff; font-family: 'Quicksand';
-                                                                                                                                                                                                                      }
-                                                                                                                                                                                .digit:focus { border-color: var(--main-color); outline: none; background: #fffafa; }
+        .digit {
+            width: 50px; height: 65px; font-size: 2.2rem; text-align: center;
+            border: 3px solid #f0f0f0; border-radius: 12px; color: var(--main-color);
+            background: #fff; font-family: 'Quicksand';
+        }
+        .digit:focus { border-color: var(--main-color); outline: none; background: #fffafa; }
 
-                                                                                                                                                                                        .btn {
-                                                                                                                                                                                                      background: var(--main-color); color: white; border: none; padding: 18px;
-                                                                                                                                                                                                                  border-radius: 20px; font-size: 1.2rem; font-weight: bold; width: 100%;
-                                                                                                                                                                                                                              cursor: pointer; box-shadow: 0 5px 0 var(--btn-shadow); margin-top: 15px;
-                                                                                                                                                                                                                                      }
-                                                                                                                                                                                                .btn:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--btn-shadow); }
+        .btn {
+            background: var(--main-color); color: white; border: none; padding: 18px;
+            border-radius: 20px; font-size: 1.2rem; font-weight: bold; width: 100%;
+            cursor: pointer; box-shadow: 0 5px 0 var(--btn-shadow); margin-top: 15px;
+        }
+        .btn:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--btn-shadow); }
 
-                                                                                                                                                                                                        .progress-container { height: 12px; background: #f0f0f0; border-radius: 10px; margin-bottom: 10px; }
-                                                                                                                                                                                                                #progress-bar { height: 100%; background: linear-gradient(90deg, var(--accent-color), var(--main-color)); width: 0%; border-radius: 10px; transition: width 0.5s; }
-                                                                                                                                                                                                                        #feedback { height: 26px; font-weight: 700; margin: 10px 0; }
-                                                                                                                                                                                                                            </style>
-  </head>
-  <body>
+        .progress-container { height: 12px; background: #f0f0f0; border-radius: 10px; margin-bottom: 10px; }
+        #progress-bar { height: 100%; background: linear-gradient(90deg, var(--accent-color), var(--main-color)); width: 0%; border-radius: 10px; transition: width 0.5s; }
+        #feedback { height: 26px; font-weight: 700; margin: 10px 0; }
+    </style>
+</head>
+<body>
 
-    <div id="app">
-          <div id="view-login">
-                    <h1 id="welcome-title">✨ ¡Bienvenido!</h1>
-                            
-                            <div class="config-group">
-                                          <label>1. Elige tu personaje:</label>
-                                                      <div class="selector-grid" style="margin-top:5px;">
-                                                                        <div class="choice-btn selected" id="opt-princesa" onclick="selectAvatar('princesa')">👸 Princesa</div>
-                                                                                        <div class="choice-btn" id="opt-guerrero" onclick="selectAvatar('guerrero')">⚔️ Guerrero</div>
-                                                                                                    </div>
-                                                                                                            </div>
+<div id="app">
+    <div id="view-login">
+        <h1 id="welcome-title">✨ ¡Bienvenido!</h1>
+        
+        <div class="config-group">
+            <label>1. Elige tu personaje:</label>
+            <div class="selector-grid" style="margin-top:5px;">
+                <div class="choice-btn selected" id="opt-princesa" onclick="selectAvatar('princesa')">👸 Princesa</div>
+                <div class="choice-btn" id="opt-guerrero" onclick="selectAvatar('guerrero')">⚔️ Guerrero</div>
+            </div>
+        </div>
 
-                                                                                                                    <div class="config-group">
-                                                                                                                                  <label>2. ¿Qué quieres practicar?</label>
-                                                                                                                                              <div class="selector-grid" style="margin-top:5px;">
-                                                                                                                                                                <div class="choice-btn selected" id="opt-suma" onclick="selectOp('sum')">Sumas (+)</div>
-                                                                                                                                                                                <div class="choice-btn" id="opt-resta" onclick="selectOp('sub')">Restas (-)</div>
-                                                                                                                                                                                            </div>
-                                                                                                                                                                                                    </div>
+        <div class="config-group">
+            <label>2. ¿Qué quieres practicar?</label>
+            <div class="selector-grid" style="margin-top:5px;">
+                <div class="choice-btn selected" id="opt-suma" onclick="selectOp('sum')">Sumas (+)</div>
+                <div class="choice-btn" id="opt-resta" onclick="selectOp('sub')">Restas (-)</div>
+            </div>
+        </div>
 
-                                                                                                                                                                                                            <div class="config-group">
-                                                                                                                                                                                                                          <label>3. Dificultad (Dígitos):</label>
-                                                                                                                                                                                                                                      <div class="selector-grid" style="margin-top:5px;">
-                                                                                                                                                                                                                                                        <div class="choice-btn" onclick="selectDigits(1, this)">1</div>
-                                                                                                                                                                                                                                                                        <div class="choice-btn selected" onclick="selectDigits(2, this)">2</div>
-                                                                                                                                                                                                                                                                                        <div class="choice-btn" onclick="selectDigits(3, this)">3</div>
-                                                                                                                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                                                                                                                            </div>
+        <div class="config-group">
+            <label>3. Dificultad (Dígitos):</label>
+            <div class="selector-grid" style="margin-top:5px;">
+                <div class="choice-btn" onclick="selectDigits(1, this)">1</div>
+                <div class="choice-btn selected" onclick="selectDigits(2, this)">2</div>
+                <div class="choice-btn" onclick="selectDigits(3, this)">3</div>
+            </div>
+        </div>
 
-                                                                                                                                                                                                                                                                                                                    <div class="config-group">
-                                                                                                                                                                                                                                                                                                                                  <label>4. Tu nombre y Meta:</label>
-                                                                                                                                                                                                                                                                                                                                              <input type="text" id="player-name" placeholder="Nombre...">
-                                                                                                                                                                                                                                                                                                                                                          <input type="number" id="total-sums" value="10" style="margin-top:10px;" placeholder="¿Cuántas sumas?">
-                                                                                                                                                                                                                                                                                                                                                                  </div>
+        <div class="config-group">
+            <label>4. Tu nombre y Meta:</label>
+            <input type="text" id="player-name" placeholder="Nombre...">
+            <input type="number" id="total-sums" value="10" style="margin-top:10px;" placeholder="¿Cuántas sumas?">
+        </div>
 
-                                                                                                                                                                                                                                                                                                                                                                          <button class="btn" onclick="start()">¡Comenzar! 🚀</button>
-                                                                                                                                                                                                                                                                                                                                                                              </div>
-
-                                                                                                                                                                                                                                                                                                                                                                                  <div id="view-game" class="hidden">
-                                                                                                                                                                                                                                                                                                                                                                                            <div class="progress-container"><div id="progress-bar"></div></div>
-                                                                                                                                                                                                                                                                                                                                                                                                    <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: bold; margin-bottom: 10px;">
-                                                                                                                                                                                                                                                                                                                                                                                                                  <span id="label-name"></span>
-                                                                                                                                                                                                                                                                                                                                                                                                                              <span>Reto <span id="current-step">1</span>/<span id="label-total">10</span></span>
-                                                                                                                                                                                                                                                                                                                                                                                                                                      </div>
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                              <div class="game-scene">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                            <div id="hero" class="character">👸</div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <div id="danger" class="character">☁️</div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <div id="target" class="character">💎</div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div>
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <div class="suma-box">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  <div id="val1">00</div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              <div id="val2">00</div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <div id="op-symbol" style="position: absolute; left: -40px; bottom: 85px; color: var(--main-color);">+</div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      <div class="linea"></div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  <div class="inputs-row" id="inputs-container">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <!-- Se genera dinámicamente -->
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <div id="feedback"></div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <button class="btn" onclick="check()">Comprobar Resultado</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div>
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <div id="view-win" class="hidden">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <h1 id="win-title">💖 ¡LO LOGRASTE!</h1>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  <p id="final-msg"></p>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <div id="win-icon" style="font-size: 5rem; margin: 20px 0;">👑</div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  <button class="btn" onclick="location.reload()">Jugar de nuevo</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      </div>
+        <button class="btn" onclick="start()">¡Comenzar! 🚀</button>
     </div>
 
-    <script>
-          let config = {
-                    name: "",
-                    type: "princesa",
-                    op: "sum",
-                    digits: 2,
-                    meta: 10,
-                    current: 1,
-                    targetSum: 0,
-                    mistakes: 0
-                };
+    <div id="view-game" class="hidden">
+        <div class="progress-container"><div id="progress-bar"></div></div>
+        <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: bold; margin-bottom: 10px;">
+            <span id="label-name"></span>
+            <span>Reto <span id="current-step">1</span>/<span id="label-total">10</span></span>
+        </div>
 
-              function selectAvatar(t) {
-                        config.type = t;
-                        document.getElementById('opt-princesa').classList.toggle('selected', t === 'princesa');
-                        document.getElementById('opt-guerrero').classList.toggle('selected', t === 'guerrero');
-                        document.body.classList.toggle('theme-guerrero', t === 'guerrero');
-                    }
+        <div class="game-scene">
+            <div id="hero" class="character">👸</div>
+            <div id="danger" class="character">☁️</div>
+            <div id="target" class="character">💎</div>
+        </div>
 
-              function selectOp(o) {
-                        config.op = o;
-                        document.getElementById('opt-suma').classList.toggle('selected', o === 'sum');
-                        document.getElementById('opt-resta').classList.toggle('selected', o === 'sub');
-                        document.getElementById('op-symbol').innerText = (o === 'sum') ? "+" : "-";
-                    }
+        <div class="suma-box">
+            <div id="val1">00</div>
+            <div id="val2">00</div>
+            <div id="op-symbol" style="position: absolute; left: -40px; bottom: 85px; color: var(--main-color);">+</div>
+            <div class="linea"></div>
+            <div class="inputs-row" id="inputs-container">
+                <!-- Se genera dinámicamente -->
+            </div>
+        </div>
 
-              function selectDigits(d, btn) {
-                        config.digits = d;
-                        btn.parentElement.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
-                        btn.classList.add('selected');
-                    }
+        <div id="feedback"></div>
+        <button class="btn" onclick="check()">Comprobar Resultado</button>
+    </div>
 
-              function start() {
-                        config.name = document.getElementById('player-name').value || "Explorador";
-                        config.meta = parseInt(document.getElementById('total-sums').value) || 10;
-                        
-                        // Configurar escena
-                        const hero = document.getElementById('hero');
-                        const target = document.getElementById('target');
-                        if(config.type === 'princesa') {
-                                      hero.innerText = "👸"; target.innerText = "💎";
-                                      document.getElementById('label-name').innerText = "Princesa " + config.name;
-                                  } else {
-                                                hero.innerText = "⚔️"; target.innerText = "🐉";
-                                                document.getElementById('label-name').innerText = "Guerrero " + config.name;
-                                            }
+    <div id="view-win" class="hidden">
+        <h1 id="win-title">💖 ¡LO LOGRASTE!</h1>
+        <p id="final-msg"></p>
+        <div id="win-icon" style="font-size: 5rem; margin: 20px 0;">👑</div>
+        <button class="btn" onclick="location.reload()">Jugar de nuevo</button>
+    </div>
+</div>
 
-                        document.getElementById('label-total').innerText = config.meta;
-                        document.getElementById('view-login').classList.add('hidden');
-                        document.getElementById('view-game').classList.remove('hidden');
-                        
-                        createInputs();
-                        newSum();
-                    }
+<script>
+    let config = {
+        name: "",
+        type: "princesa",
+        op: "sum",
+        digits: 2,
+        meta: 10,
+        current: 1,
+        targetSum: 0,
+        mistakes: 0
+    };
 
-              function createInputs() {
-                        const container = document.getElementById('inputs-container');
-                        container.innerHTML = "";
-                        // Creamos d-u, d-d, d-c, d-m (unidades, decenas, centenas, millares)
-                        // Necesitamos d+1 casillas por si la suma se pasa
-                        const numInputs = config.digits + 1;
-                        const ids = ['d-u', 'd-d', 'd-c', 'd-m'];
-                        
-                        for(let i = 0; i < numInputs; i++) {
-                                      const input = document.createElement('input');
-                                      input.type = "tel"; // Abre teclado numérico en móviles
-                                      input.className = "digit";
-                                      input.id = ids[i];
-                                      input.placeholder = (['u','d','c','m'])[i];
-                                      
-                                      // Validar solo números y navegación
-                                      input.addEventListener('input', function(e) {
-                                                        this.value = this.value.replace(/[^0-9]/g, '').slice(0,1);
-                                                        if(this.value && i < numInputs - 1) {
-                                                                              document.getElementById(ids[i+1]).focus();
-                                                                          }
-                                                    });
+    function selectAvatar(t) {
+        config.type = t;
+        document.getElementById('opt-princesa').classList.toggle('selected', t === 'princesa');
+        document.getElementById('opt-guerrero').classList.toggle('selected', t === 'guerrero');
+        document.body.classList.toggle('theme-guerrero', t === 'guerrero');
+    }
 
-                                      input.addEventListener('keydown', function(e) {
-                                                        if(e.key === "Enter") check();
-                                                        if(e.key === "Backspace" && !this.value && i > 0) {
-                                                                              document.getElementById(ids[i-1]).focus();
-                                                                          }
-                                                    });
+    function selectOp(o) {
+        config.op = o;
+        document.getElementById('opt-suma').classList.toggle('selected', o === 'sum');
+        document.getElementById('opt-resta').classList.toggle('selected', o === 'sub');
+        document.getElementById('op-symbol').innerText = (o === 'sum') ? "+" : "-";
+    }
 
-                                      container.appendChild(input);
-                                  }
-                    }
+    function selectDigits(d, btn) {
+        config.digits = d;
+        btn.parentElement.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+    }
 
-              function newSum() {
-                        let n1, n2;
-                        const max = Math.pow(10, config.digits) - 1;
-                        const min = Math.pow(10, config.digits - 1);
+    function start() {
+        config.name = document.getElementById('player-name').value || "Explorador";
+        config.meta = parseInt(document.getElementById('total-sums').value) || 10;
+        
+        // Configurar escena
+        const hero = document.getElementById('hero');
+        const target = document.getElementById('target');
+        if(config.type === 'princesa') {
+            hero.innerText = "👸"; target.innerText = "💎";
+            document.getElementById('label-name').innerText = "Princesa " + config.name;
+        } else {
+            hero.innerText = "⚔️"; target.innerText = "🐉";
+            document.getElementById('label-name').innerText = "Guerrero " + config.name;
+        }
 
-                        n1 = Math.floor(Math.random() * (max - min + 1)) + min;
-                        n2 = Math.floor(Math.random() * (max - min + 1)) + min;
+        document.getElementById('label-total').innerText = config.meta;
+        document.getElementById('view-login').classList.add('hidden');
+        document.getElementById('view-game').classList.remove('hidden');
+        
+        createInputs();
+        newSum();
+    }
 
-                        if(config.op === 'sub') {
-                                      if(n1 < n2) [n1, n2] = [n2, n1]; // Evitar negativos
-                                      config.targetSum = n1 - n2;
-                                  } else {
-                                                config.targetSum = n1 + n2;
-                                            }
+    function createInputs() {
+        const container = document.getElementById('inputs-container');
+        container.innerHTML = "";
+        // Creamos d-u, d-d, d-c, d-m (unidades, decenas, centenas, millares)
+        // Necesitamos d+1 casillas por si la suma se pasa
+        const numInputs = config.digits + 1;
+        const ids = ['d-u', 'd-d', 'd-c', 'd-m'];
+        
+        for(let i = 0; i < numInputs; i++) {
+            const input = document.createElement('input');
+            input.type = "tel"; // Abre teclado numérico en móviles
+            input.className = "digit";
+            input.id = ids[i];
+            input.placeholder = (['u','d','c','m'])[i];
+            
+            // Validar solo números y navegación
+            input.addEventListener('input', function(e) {
+                this.value = this.value.replace(/[^0-9]/g, '').slice(0,1);
+                if(this.value && i < numInputs - 1) {
+                    document.getElementById(ids[i+1]).focus();
+                }
+            });
 
-                        document.getElementById('val1').innerText = n1;
-                        document.getElementById('val2').innerText = n2;
-                        config.mistakes = 0;
-                        document.getElementById('danger').style.right = "-60px";
-                        
-                        document.querySelectorAll('.digit').forEach(i => i.value = "");
-                        document.getElementById('feedback').innerText = "¡Tú puedes!";
-                        document.getElementById('feedback').style.color = "var(--text-color)";
-                        document.getElementById('d-u').focus();
-                    }
+            input.addEventListener('keydown', function(e) {
+                if(e.key === "Enter") check();
+                if(e.key === "Backspace" && !this.value && i > 0) {
+                    document.getElementById(ids[i-1]).focus();
+                }
+            });
 
-              function check() {
-                        const ids = ['d-u', 'd-d', 'd-c', 'd-m'];
-                        let userStr = "";
-                        // Construimos el número al revés porque el container es row-reverse
-                        for(let i = config.digits; i >= 0; i--) {
-                                      userStr += (document.getElementById(ids[i])?.value || "");
-                                  }
-                        
-                        const userVal = parseInt(userStr) || 0;
-                        const fb = document.getElementById('feedback');
+            container.appendChild(input);
+        }
+    }
 
-                        if(userVal === config.targetSum) {
-                                      fb.innerText = "¡Correcto! 🌟";
-                                      fb.style.color = "#4caf50";
-                                      setTimeout(() => {
-                                                        config.current++;
-                                                        if(config.current > config.meta) {
-                                                                              win();
-                                                                          } else {
-                                                                                                document.getElementById('current-step').innerText = config.current;
-                                                                                                document.getElementById('progress-bar').style.width = ((config.current-1)/config.meta*100) + "%";
-                                                                                                document.getElementById('hero').style.left = ((config.current-1)/config.meta*75) + "%";
-                                                                                                newSum();
-                                                                                            }
-                                                    }, 800);
-                                  } else {
-                                                config.mistakes++;
-                                                fb.innerText = "¡Casi! Intenta de nuevo ⚡";
-                                                fb.style.color = "#f44336";
-                                                document.getElementById('danger').style.right = (config.mistakes * 50) + "px";
-                                                if(config.mistakes >= 4) {
-                                                                  fb.innerText = "¡Cuidado! Intentemos otra.";
-                                                                  setTimeout(newSum, 1500);
-                                                              }
-                                            }
-                    }
+    function newSum() {
+        let n1, n2;
+        const max = Math.pow(10, config.digits) - 1;
+        const min = Math.pow(10, config.digits - 1);
 
-              function win() {
-                        document.getElementById('progress-bar').style.width = "100%";
-                        document.getElementById('hero').style.left = "80%";
-                        setTimeout(() => {
-                                      document.getElementById('view-game').classList.add('hidden');
-                                      document.getElementById('view-win').classList.remove('hidden');
-                                      document.getElementById('final-msg').innerText = "¡Felicidades " + config.name + "! Has completado tu meta de " + (config.op==='sum'?'sumas':'restas') + ".";
-                                  }, 600);
-                    }
-    </script>
-  </body>
+        n1 = Math.floor(Math.random() * (max - min + 1)) + min;
+        n2 = Math.floor(Math.random() * (max - min + 1)) + min;
+
+        if(config.op === 'sub') {
+            if(n1 < n2) [n1, n2] = [n2, n1]; // Evitar negativos
+            config.targetSum = n1 - n2;
+        } else {
+            config.targetSum = n1 + n2;
+        }
+
+        document.getElementById('val1').innerText = n1;
+        document.getElementById('val2').innerText = n2;
+        config.mistakes = 0;
+        document.getElementById('danger').style.right = "-60px";
+        
+        document.querySelectorAll('.digit').forEach(i => i.value = "");
+        document.getElementById('feedback').innerText = "¡Tú puedes!";
+        document.getElementById('feedback').style.color = "var(--text-color)";
+        document.getElementById('d-u').focus();
+    }
+
+    function check() {
+        const ids = ['d-u', 'd-d', 'd-c', 'd-m'];
+        let userStr = "";
+        // Construimos el número al revés porque el container es row-reverse
+        for(let i = config.digits; i >= 0; i--) {
+            userStr += (document.getElementById(ids[i])?.value || "");
+        }
+        
+        const userVal = parseInt(userStr) || 0;
+        const fb = document.getElementById('feedback');
+
+        if(userVal === config.targetSum) {
+            fb.innerText = "¡Correcto! 🌟";
+            fb.style.color = "#4caf50";
+            setTimeout(() => {
+                config.current++;
+                if(config.current > config.meta) {
+                    win();
+                } else {
+                    document.getElementById('current-step').innerText = config.current;
+                    document.getElementById('progress-bar').style.width = ((config.current-1)/config.meta*100) + "%";
+                    document.getElementById('hero').style.left = ((config.current-1)/config.meta*75) + "%";
+                    newSum();
+                }
+            }, 800);
+        } else {
+            config.mistakes++;
+            fb.innerText = "¡Casi! Intenta de nuevo ⚡";
+            fb.style.color = "#f44336";
+            document.getElementById('danger').style.right = (config.mistakes * 50) + "px";
+            if(config.mistakes >= 4) {
+                fb.innerText = "¡Cuidado! Intentemos otra.";
+                setTimeout(newSum, 1500);
+            }
+        }
+    }
+
+    function win() {
+        document.getElementById('progress-bar').style.width = "100%";
+        document.getElementById('hero').style.left = "80%";
+        setTimeout(() => {
+            document.getElementById('view-game').classList.add('hidden');
+            document.getElementById('view-win').classList.remove('hidden');
+            document.getElementById('final-msg').innerText = "¡Felicidades " + config.name + "! Has completado tu meta de " + (config.op==='sum'?'sumas':'restas') + ".";
+        }, 600);
+    }
+</script>
+</body>
 </html>
 
-                        })
-              }
-                                                }
-                                  }
-                                                                          }
-                                                        }
-                                      })
-                        }
-                        }
-              }
-                                  }
-                        }
-              }
-                                                        }
-                                      })
-                                                        }
-                                      })
-                        }
-              }
-                                  }
-                        }
-              }
-              }
-              }
-              }
-          }-->
-                                                                                                                                                                                        }
-                                                                                                                                                                        }
-                                                                                                                                                }
-                                                                                                        }
-                                                                                                }
-                                                                        }
-                                                                }
-                                                        }
-                                }
-                        }
-                }
-        }
