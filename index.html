@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suma Mágica ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pink-light: #ffebf2;
+            --pink-main: #ff85a2;
+            --purple-main: #b39ddb;
+            --mint: #a5d6a7;
+            --text-color: #5d4037;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: var(--pink-light);
+            color: var(--text-color);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        #app {
+            background: white;
+            padding: 25px;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(255, 133, 162, 0.2);
+            width: 90%;
+            max-width: 380px;
+            position: relative;
+            border: 4px solid var(--purple-main);
+        }
+
+        .hidden { display: none; }
+
+        h1, h2 { color: var(--pink-main); margin-top: 0; }
+
+        /* --- DESAFÍO VISUAL (EL JUEGO) --- */
+        .game-scene {
+            background: #e1f5fe;
+            height: 80px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #b3e5fc;
+        }
+
+        .character {
+            position: absolute;
+            bottom: 10px;
+            font-size: 2rem;
+            transition: left 0.5s ease;
+        }
+
+        #hero { left: 10px; z-index: 2; }
+        #target { right: 10px; }
+        #danger { 
+            right: -50px; 
+            bottom: 15px; 
+            font-size: 1.8rem; 
+            transition: right 0.5s ease; 
+        }
+
+        /* --- SUMA VERTICAL --- */
+        .suma-box {
+            display: inline-block;
+            font-size: 3rem;
+            text-align: right;
+            margin: 10px 0;
+            position: relative;
+            font-weight: 700;
+            color: var(--purple-main);
+            letter-spacing: 8px;
+        }
+
+        .linea {
+            border-bottom: 6px solid var(--pink-main);
+            border-radius: 3px;
+            margin: 5px 0 15px 0;
+        }
+
+        .inputs-row {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .digit {
+            width: 55px;
+            height: 65px;
+            font-size: 2.2rem;
+            text-align: center;
+            border: 3px solid #eee;
+            border-radius: 15px;
+            background: #fdfdfd;
+            font-family: 'Quicksand', sans-serif;
+            color: var(--pink-main);
+        }
+
+        .digit:focus {
+            border-color: var(--pink-main);
+            outline: none;
+            background: #fff9fb;
+        }
+
+        /* --- UI ELEMENTS --- */
+        .btn {
+            background: var(--pink-main);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            width: 100%;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #e6738f;
+            margin-top: 15px;
+        }
+
+        .btn:active { transform: translateY(3px); box-shadow: none; }
+
+        .progress-container {
+            height: 12px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+
+        #progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--purple-main), var(--pink-main));
+            width: 0%;
+            border-radius: 10px;
+            transition: width 0.5s;
+        }
+
+        #feedback {
+            height: 24px;
+            font-weight: 600;
+            margin: 10px 0;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <div id="view-login">
+        <h1>✨ ¡Hola Linda!</h1>
+        <p>Escribe tu nombre para jugar:</p>
+        <input type="text" id="player-name" class="digit" style="width: 80%; font-size: 1.2rem; margin-bottom: 20px;" placeholder="Tu nombre...">
+        <button class="btn" onclick="start()">¡Empezar Magia! ✨</button>
+    </div>
+
+    <div id="view-game" class="hidden">
+        <div class="progress-container"><div id="progress-bar"></div></div>
+        <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: bold;">
+            <span id="label-name"></span>
+            <span>Reto <span id="current-step">1</span>/40</span>
+        </div>
+
+        <div class="game-scene">
+            <div id="hero" class="character">🐶</div>
+            <div id="danger" class="character">☁️</div>
+            <div id="target" class="character">🦴</div>
+        </div>
+
+        <div class="suma-box">
+            <div id="val1">000</div>
+            <div id="val2">000</div>
+            <div style="position: absolute; left: -35px; bottom: 85px; color: var(--pink-main);">+</div>
+            <div class="linea"></div>
+            <div class="inputs-row">
+                <input type="number" class="digit" id="d-u" oninput="step(this, 'd-d')" placeholder="u">
+                <input type="number" class="digit" id="d-d" oninput="step(this, 'd-c')" placeholder="d">
+                <input type="number" class="digit" id="d-c" oninput="step(this, 'd-m')" placeholder="c">
+                <input type="number" class="digit" id="d-m" placeholder="m">
+            </div>
+        </div>
+
+        <div id="feedback"></div>
+        <button class="btn" onclick="check()">Comprobar Resultado</button>
+    </div>
+
+    <div id="view-win" class="hidden">
+        <h1>💖 ¡ERES GENIAL!</h1>
+        <p id="final-msg"></p>
+        <div style="font-size: 4rem;">👑</div>
+        <button class="btn" onclick="location.reload()">Jugar de nuevo</button>
+    </div>
+</div>
+
+<script>
+    let playerName = "";
+    let level = 1;
+    let targetSum = 0;
+    let mistakes = 0;
+
+    function start() {
+        playerName = document.getElementById('player-name').value;
+        if(!playerName) return;
+        document.getElementById('view-login').classList.add('hidden');
+        document.getElementById('view-game').classList.remove('hidden');
+        document.getElementById('label-name').innerText = "Princesa " + playerName;
+        newSum();
+    }
+
+    function newSum() {
+        const n1 = Math.floor(Math.random() * 800) + 100;
+        const n2 = Math.floor(Math.random() * 800) + 100;
+        targetSum = n1 + n2;
+        mistakes = 0;
+
+        document.getElementById('val1').innerText = n1;
+        document.getElementById('val2').innerText = n2;
+        document.getElementById('danger').style.right = "-50px"; // Escondemos la nube
+        
+        ['d-u','d-d','d-c','d-m'].forEach(id => {
+            document.getElementById(id).value = "";
+            document.getElementById(id).style.borderColor = "#eee";
+        });
+        document.getElementById('feedback').innerText = "¡Tú puedes!";
+        document.getElementById('d-u').focus();
+    }
+
+    function step(el, nextId) {
+        if(el.value.length >= 1) {
+            el.value = el.value.slice(0,1);
+            document.getElementById(nextId).focus();
+        }
+    }
+
+    function check() {
+        const u = document.getElementById('d-u').value || "0";
+        const d = document.getElementById('d-d').value || "0";
+        const c = document.getElementById('d-c').value || "0";
+        const m = document.getElementById('d-m').value || "0";
+        
+        const userVal = parseInt(m + c + d + u);
+        const fb = document.getElementById('feedback');
+
+        if(userVal === targetSum) {
+            fb.innerText = "¡Brillante! ✨";
+            fb.style.color = "var(--mint)";
+            // El perrito avanza un poco por cada acierto global hacia el final? 
+            // No, mejor celebramos y pasamos al siguiente.
+            
+            setTimeout(() => {
+                level++;
+                if(level > 40) {
+                    win();
+                } else {
+                    document.getElementById('current-step').innerText = level;
+                    document.getElementById('progress-bar').style.width = (level/40*100) + "%";
+                    newSum();
+                }
+            }, 1000);
+        } else {
+            mistakes++;
+            fb.innerText = "¡Oh no! Intenta otra vez 🌸";
+            fb.style.color = "var(--pink-main)";
+            
+            // LA NUBE SE ACERCA (Desafío)
+            let moveDanger = mistakes * 45; 
+            document.getElementById('danger').style.right = moveDanger + "px";
+
+            if(mistakes >= 5) {
+                fb.innerText = "¡La nube te alcanzó! Practiquemos otra.";
+                setTimeout(newSum, 1500);
+            }
+        }
+    }
+
+    function win() {
+        document.getElementById('view-game').classList.add('hidden');
+        document.getElementById('view-win').classList.remove('hidden');
+        document.getElementById('final-msg').innerText = "¡Lo lograste " + playerName + "! Eres una experta en matemáticas.";
+    }
+</script>
+
+</body>
+</html>
+
