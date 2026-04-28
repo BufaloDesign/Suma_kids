@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suma Vertical Kids</title>
+    <style>
+        :root {
+            --primary: #2196F3;
+            --secondary: #E91E63;
+            --bg: #fdfdfd;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        #app {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            width: 95%;
+            max-width: 350px;
+            text-align: center;
+        }
+
+        .hidden { display: none; }
+
+        /* Estilo de Suma Vertical */
+        .suma-container {
+            display: inline-block;
+            font-size: 3.5rem;
+            text-align: right;
+            padding: 20px;
+            letter-spacing: 15px;
+            line-height: 1.2;
+            position: relative;
+        }
+
+        .linea-suma {
+            border-bottom: 5px solid #333;
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+
+        .inputs-resultado {
+            display: flex;
+            flex-direction: row-reverse; /* Para que escriba de derecha a izquierda */
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .digit-input {
+            width: 50px;
+            height: 60px;
+            font-size: 2.5rem;
+            text-align: center;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            font-family: inherit;
+        }
+
+        .digit-input:focus {
+            border-color: var(--primary);
+            outline: none;
+            background-color: #e3f2fd;
+        }
+
+        .signo {
+            position: absolute;
+            left: -40px;
+            bottom: 80px;
+        }
+
+        /* Utilidades */
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .progress-bar {
+            background: #eee;
+            height: 10px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+
+        #fill {
+            background: #4CAF50;
+            height: 100%;
+            width: 0%;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        #feedback { height: 30px; margin-top: 10px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <div id="s-login">
+        <h2>✨ ¡Bienvenido!</h2>
+        <input type="text" id="nombre" placeholder="Tu nombre" style="width:80%; padding:10px; font-size:1.2rem; border-radius:10px; border:1px solid #ccc;">
+        <button class="btn" onclick="empezar()">¡A sumar!</button>
+    </div>
+
+    <div id="s-game" class="hidden">
+        <div id="saludo" style="font-size: 0.9rem; color: #666;"></div>
+        <div class="progress-bar"><div id="fill"></div></div>
+        <div>Suma <span id="contador">1</span> de 40</div>
+
+        <div class="suma-container">
+            <div id="n1">123</div>
+            <div id="n2">456</div>
+            <div class="signo">+</div>
+            <div class="linea-suma"></div>
+            
+            <div class="inputs-resultado">
+                <input type="number" class="digit-input" id="u" maxlength="1" oninput="mover(this, 'd')" placeholder="u">
+                <input type="number" class="digit-input" id="d" maxlength="1" oninput="mover(this, 'c')" placeholder="d">
+                <input type="number" class="digit-input" id="c" maxlength="1" oninput="mover(this, 'm')" placeholder="c">
+                <input type="number" class="digit-input" id="m" maxlength="1" placeholder="m">
+            </div>
+        </div>
+
+        <div id="feedback"></div>
+        <button class="btn" onclick="validar()">Comprobar</button>
+    </div>
+
+    <div id="s-final" class="hidden">
+        <h1>🏆 ¡LO LOGRASTE!</h1>
+        <p id="msg-final"></p>
+        <button class="btn" onclick="location.reload()">Jugar otra vez</button>
+    </div>
+</div>
+
+<script>
+    let nombre = "";
+    let ejercicioActual = 1;
+    let sumaCorrecta = 0;
+
+    function empezar() {
+        nombre = document.getElementById('nombre').value;
+        if(!nombre) return alert("Escribe tu nombre");
+        document.getElementById('s-login').classList.add('hidden');
+        document.getElementById('s-game').classList.remove('hidden');
+        document.getElementById('saludo').innerText = "¡Vamos " + nombre + "!";
+        nuevoEjercicio();
+    }
+
+    function nuevoEjercicio() {
+        const num1 = Math.floor(Math.random() * 800) + 100;
+        const num2 = Math.floor(Math.random() * 199) + 50;
+        sumaCorrecta = num1 + num2;
+
+        document.getElementById('n1').innerText = num1;
+        document.getElementById('n2').innerText = num2;
+        
+        // Limpiar inputs
+        ['u','d','c','m'].forEach(id => {
+            document.getElementById(id).value = "";
+            document.getElementById(id).style.borderColor = "#ccc";
+        });
+        document.getElementById('feedback').innerText = "";
+        document.getElementById('u').focus();
+    }
+
+    // Función para saltar al siguiente cuadrito automáticamente
+    function mover(actual, siguienteId) {
+        if(actual.value.length >= 1) {
+            actual.value = actual.value.slice(0,1); // Solo un dígito
+            document.getElementById(siguienteId).focus();
+        }
+    }
+
+    function validar() {
+        const u = document.getElementById('u').value || "0";
+        const d = document.getElementById('d').value || "0";
+        const c = document.getElementById('c').value || "0";
+        const m = document.getElementById('m').value || "0";
+        
+        // Reconstruir el número: m+c+d+u
+        const totalUsuario = parseInt(m + c + d + u);
+
+        if(totalUsuario === sumaCorrecta) {
+            document.getElementById('feedback').innerText = "¡Excelente, " + nombre + "! ✨";
+            document.getElementById('feedback').style.color = "green";
+            
+            setTimeout(() => {
+                ejercicioActual++;
+                if(ejercicioActual > 40) {
+                    finalizar();
+                } else {
+                    document.getElementById('contador').innerText = ejercicioActual;
+                    document.getElementById('fill').style.width = (ejercicioActual/40*100) + "%";
+                    nuevoEjercicio();
+                }
+            }, 1200);
+        } else {
+            document.getElementById('feedback').innerText = "Revisa bien las llevadas... 🤔";
+            document.getElementById('feedback').style.color = "red";
+        }
+    }
+
+    function finalizar() {
+        document.getElementById('s-game').classList.add('hidden');
+        document.getElementById('s-final').classList.remove('hidden');
+        document.getElementById('msg-final').innerText = "¡Increíble " + nombre + "! Terminaste los 40 retos.";
+    }
+</script>
+</body>
+</html>
+

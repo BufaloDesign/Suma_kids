@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suma Kids - ¡A sumar!</title>
+    <style>
+        :root {
+            --primary: #4CAF50;
+            --secondary: #FF9800;
+            --bg: #f0f4f8;
+            --text: #333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+
+        #app {
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .hidden { display: none; }
+
+        h1 { color: var(--primary); margin-bottom: 10px; }
+        
+        input[type="text"], input[type="number"] {
+            width: 80%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin-top: 10px;
+        }
+
+        button:active { transform: scale(0.95); }
+
+        .exercise-box {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #2c3e50;
+        }
+
+        .progress-bar {
+            background: #eee;
+            border-radius: 10px;
+            height: 15px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        #progress-fill {
+            background: var(--secondary);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .feedback {
+            font-weight: bold;
+            height: 25px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <div id="screen-login">
+        <h1>¡Hola! 👋</h1>
+        <p>Escribe tu nombre para empezar:</p>
+        <input type="text" id="user-name" placeholder="Tu nombre aquí">
+        <br>
+        <button onclick="startGame()">¡Empezar Juego!</button>
+    </div>
+
+    <div id="screen-game" class="hidden">
+        <p id="welcome-msg"></p>
+        <div class="progress-bar"><div id="progress-fill"></div></div>
+        <p>Ejercicio <span id="current-count">1</span> de 40</p>
+        
+        <div class="exercise-box">
+            <span id="num1">0</span> + <span id="num2">0</span>
+        </div>
+        
+        <div class="feedback" id="feedback"></div>
+        
+        <input type="number" id="answer" placeholder="?" pattern="\d*">
+        <br>
+        <button onclick="checkAnswer()">Enviar Respuesta</button>
+    </div>
+
+    <div id="screen-result" class="hidden">
+        <h1>¡Increíble! 🏆</h1>
+        <p id="congrats-msg"></p>
+        <button onclick="location.reload()">Jugar de nuevo</button>
+    </div>
+</div>
+
+<script>
+    let userName = "";
+    let currentExercise = 1;
+    const totalExercises = 40;
+    let n1, n2, correctAnswer;
+
+    const screenLogin = document.getElementById('screen-login');
+    const screenGame = document.getElementById('screen-game');
+    const screenResult = document.getElementById('screen-result');
+
+    function startGame() {
+        userName = document.getElementById('user-name').value.trim();
+        if (userName === "") {
+            alert("¡Por favor, dinos tu nombre!");
+            return;
+        }
+        
+        screenLogin.classList.add('hidden');
+        screenGame.classList.remove('hidden');
+        document.getElementById('welcome-msg').innerText = `¡Tú puedes, ${userName}!`;
+        generateExercise();
+    }
+
+    function generateExercise() {
+        // Genera números de hasta 3 dígitos (ej: 100-999)
+        // Puedes ajustar a (10, 99) si prefieres de 2 dígitos
+        n1 = Math.floor(Math.random() * 900) + 100;
+        n2 = Math.floor(Math.random() * 900) + 100;
+        correctAnswer = n1 + n2;
+
+        document.getElementById('num1').innerText = n1;
+        document.getElementById('num2').innerText = n2;
+        document.getElementById('answer').value = "";
+        document.getElementById('answer').focus();
+    }
+
+    function checkAnswer() {
+        const userAnswer = parseInt(document.getElementById('answer').value);
+        const feedback = document.getElementById('feedback');
+
+        if (isNaN(userAnswer)) return;
+
+        if (userAnswer === correctAnswer) {
+            feedback.style.color = "green";
+            feedback.innerText = "¡Correcto! 🌟";
+            
+            setTimeout(() => {
+                feedback.innerText = "";
+                currentExercise++;
+                updateProgress();
+            }, 800);
+        } else {
+            feedback.style.color = "red";
+            feedback.innerText = "Casi... ¡Intenta otra vez! 💪";
+        }
+    }
+
+    function updateProgress() {
+        if (currentExercise > totalExercises) {
+            showResults();
+        } else {
+            document.getElementById('current-count').innerText = currentExercise;
+            const percent = ((currentExercise - 1) / totalExercises) * 100;
+            document.getElementById('progress-fill').style.width = percent + "%";
+            generateExercise();
+        }
+    }
+
+    function showResults() {
+        screenGame.classList.add('hidden');
+        screenResult.classList.remove('hidden');
+        document.getElementById('congrats-msg').innerText = 
+            `¡Felicidades, ${userName}! Has completado los 40 ejercicios de sumas perfectamente.`;
+    }
+
+    // Permitir enviar con la tecla Enter
+    document.getElementById('answer').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            checkAnswer();
+        }
+    });
+</script>
+
+</body>
+</html>
+
