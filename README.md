@@ -1,16 +1,29 @@
 # Suma_kids
-🧮 Aplicación web móvil para practicar sumas de 3 dígitos. 40 niveles, feedback inmediato y registro de usuario. ¡Ideal para niños! 🚀
 
-Suma Kids - Mini App Educativa
+​🧮 Suma Mágica / Desafío Guerrero
 
-Aplicación web móvil diseñada para niños que cursan educación primaria. El objetivo es fortalecer la agilidad mental mediante la resolución de 40 ejercicios de sumas de hasta 3 dígitos.
-
-Características:
-
-Registro de nombre para personalización.
-
-Barra de progreso en tiempo real.
-
-Interfaz amigable y responsiva (Mobile First).
-
-Desarrollado puramente con HTML, CSS y JavaScript (Vanilla).
+​Mini-App Educativa de Agilidad Mental
+​Suma Mágica es una aplicación web interactiva diseñada para niños en etapa de educación primaria. A través de un entorno gamificado, los estudiantes refuerzan sus habilidades en sumas de hasta 3 y 4 dígitos, adaptando la experiencia a su propia identidad y ritmo de aprendizaje.
+​✨ Características Destacadas
+​🎭 Personalización de Avatar: Permite elegir entre dos perfiles (Princesa ✨ o Guerrero ⚔️) que transforman visualmente toda la interfaz con colores pastel o tonos de batalla.
+​🎯 Metas Dinámicas: A diferencia de las apps con niveles fijos, aquí el niño define su propia meta diaria, fomentando la autonomía y el compromiso.
+​⌨️ UX Fluida y Accesible:
+​Navegación automática entre casillas.
+​Soporte para teclado (Confirmación con Enter y retroceso con Backspace).
+​Diseño Mobile-First optimizado para tablets y teléfonos.
+​📈 Feedback Gamificado:
+​Barra de progreso visual.
+​Sistema de "Peligro" (la nube ☁️ o el dragón 🐉 se acercan si hay errores).
+​Movimiento del personaje en tiempo real hacia su objetivo.
+​🛠️ Tech Stack: Desarrollo puro con Vanilla JavaScript, HTML5 y CSS3 (sin dependencias externas, carga instantánea).
+​🚀 Mejoras Implementadas (v3.0)
+​Respecto a la versión original, se han añadido las siguientes funcionalidades clave:
+​Motor de Temas Dinámico: Implementación de variables CSS (:root) que cambian en tiempo real según el avatar seleccionado.
+​Lógica de Navegación Proporcional: El avance del personaje y la barra de carga se calculan dinámicamente según la meta establecida por el usuario (n/Meta).
+​Control de Foco Inteligente: Sistema de gestión de inputs para facilitar la escritura de resultados de derecha a izquierda (unidades, decenas, centenas).
+​Diseño Ergonómico: Se aumentó el padding y las zonas de toque para evitar clics accidentales en dispositivos móviles.
+​📋 Cómo usar
+​Descarga el archivo .html.
+​Ábrelo en cualquier navegador web moderno.
+​¡Configura tu nombre, elige tu bando, ponte una meta y empieza a sumar!
+​Nota pedagógica: Esta herramienta no solo enseña matemáticas, sino que ayuda a la coordinación ojo-mano y a la familiarización con la estructura decimal de los números (U, D, C, M).
